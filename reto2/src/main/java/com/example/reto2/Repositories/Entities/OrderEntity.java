@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.example.reto2.Service.Enums.OrderStatus;
-
 @Table(name = "Order")
 @Entity(name = "Order")
 public class OrderEntity {
