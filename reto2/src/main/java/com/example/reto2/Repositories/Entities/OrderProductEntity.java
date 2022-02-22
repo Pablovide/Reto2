@@ -1,5 +1,6 @@
 package com.example.reto2.Repositories.Entities;
 
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

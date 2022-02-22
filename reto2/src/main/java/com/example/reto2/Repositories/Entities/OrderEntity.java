@@ -15,11 +15,11 @@ public class OrderEntity {
     private @Id @GeneratedValue long id;
     private Date creationDate;
     private String customerName;
-    private OrderStatus status;
+    private String status;
 
     public OrderEntity(){}
 
-    public OrderEntity(Date creationDate, String customerName, OrderStatus status) {
+    public OrderEntity(Date creationDate, String customerName, String status) {
         this.creationDate = creationDate;
         this.customerName = customerName;
         this.status = status;
@@ -49,11 +49,11 @@ public class OrderEntity {
         this.customerName = customerName;
     }
 
-    public OrderStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }
