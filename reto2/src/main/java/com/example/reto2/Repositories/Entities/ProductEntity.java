@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name = "Product")
 @Entity(name = "Product")
 public class ProductEntity {
-    private @Id @GeneratedValue long id;
+    private @Id @GeneratedValue Long id;
     private String name;
     private double price;
     private String imageUrl;
