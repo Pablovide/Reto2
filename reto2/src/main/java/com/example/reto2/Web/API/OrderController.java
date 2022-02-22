@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/orders")
 public class OrderController {
 
-    private final OrderService orderService;
+    //private final OrderService orderService;
 
     @GetMapping("")
     public ArrayList<OrderDTO> getOrders() {
