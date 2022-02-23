@@ -1,6 +1,6 @@
 package com.example.reto2.Web.API;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.example.reto2.Service.OrderService;
 import com.example.reto2.Service.Models.OrderDTO;
@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/orders")
 public class OrderController {
 
-    //private final OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @GetMapping("")
-    public ArrayList<OrderDTO> getOrders() {
-        throw new NotYetImplementedException();
+    public List<OrderDTO> getOrders() {
+        return orderService.getAll();
     }
 }

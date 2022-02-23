@@ -19,11 +19,7 @@ public class ProductController {
     ProductController(ProductService productService){
         this.productService = productService;
     }
-/*
-    @GetMapping("")
-    public ArrayList<ProductDTO> getProducts() {
-        throw new NotYetImplementedException();
-    }*/
+    
     @GetMapping()
     public List<ProductDTO> GetProducts(){
         return productService.getAll();

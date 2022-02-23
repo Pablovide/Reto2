@@ -5,8 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "Product")
-@Entity(name = "Product")
+@Table(name = "Products")
+@Entity(name = "Products")
 public class ProductEntity {
     private @Id @GeneratedValue Long id;
     private String name;
@@ -22,11 +22,11 @@ public class ProductEntity {
         this.imageUrl = imageUrl;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
