@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Table(name = "Order_Product")
 @Entity(name = "Order_Product")
 public class OrderProductEntity {
-    private @Id @GeneratedValue long id;
+    private @Id @GeneratedValue Long id;
     private long orderId;
     private long productId;
     private int quantity;

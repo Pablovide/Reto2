@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Table(name = "Order")
 @Entity(name = "Order")
 public class OrderEntity {
-    private @Id @GeneratedValue long id;
+    private @Id @GeneratedValue Long id;
     private Date creationDate;
     private String customerName;
     private String status;
