@@ -43,12 +43,12 @@ public class ProductService {
         }
     }
 
-    public Optional<ProductDTO> findById(Long id){
+    public ProductDTO findById(Long id){
         Optional<ProductEntity> entity = productRepository.findById(id);
         if(entity.isPresent()){
-            return Optional.of(modelMapper.map(entity.get(), ProductDTO.class));
+            return modelMapper.map(entity.get(), ProductDTO.class);
         }else{
-            return Optional.empty();
+            return null;
         }
     }
 }

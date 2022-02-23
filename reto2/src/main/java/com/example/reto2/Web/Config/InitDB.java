@@ -30,11 +30,11 @@ public class InitDB {
             productRepos.save(new ProductEntity("Icecream", 5, "https://www.amazon.es/Ben-Jerrys-Cookie-Dough-Helado/dp/B002VLAS6M/ref=sr_1_8_0o_DIA?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=helado&qid=1639057963&sr=8-8"));
             productRepos.save(new ProductEntity("Beer", 3, "https://www.amazon.es/Potter-Cerveza-Mantequilla-Alcohol-Horrocrux/dp/B07M61MT8F/ref=sr_1_3?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=cerveza&qid=1639058003&refinements=p_36%3A831296031&rnid=831274031&s=grocery&sr=1-3"));
             productRepos.save(new ProductEntity("Phone", 500, "https://www.amazon.es/Plateado-Pantalla-almacenamiento-cu%C3%A1druple-garant%C3%ADa/dp/B08HJGQ9ZS/ref=sr_1_4?keywords=movil&qid=1639058031&refinements=p_36%3A45000-55000&rnid=1323854031&sr=8-4&th=1"));
-            orderProductRepos.save(new OrderProductEntity(1L, 3L, 8));
-            orderProductRepos.save(new OrderProductEntity(2L, 1L, 1));
-            orderProductRepos.save(new OrderProductEntity(3L, 2L, 10));
-            orderProductRepos.save(new OrderProductEntity(4L, 6L, 3));
-            orderProductRepos.save(new OrderProductEntity(5L, 5L, 20));
+            orderProductRepos.save(new OrderProductEntity(1L, 8L, 8));
+            orderProductRepos.save(new OrderProductEntity(2L, 6L, 1));
+            orderProductRepos.save(new OrderProductEntity(3L, 7L, 10));
+            orderProductRepos.save(new OrderProductEntity(4L, 11L, 3));
+            orderProductRepos.save(new OrderProductEntity(5L, 10L, 20));
         };
     }
 }
