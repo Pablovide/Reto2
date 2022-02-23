@@ -53,10 +53,10 @@ public class OrderProductService {
         }
     }
 
-    public ArrayList<OrderProductDTO> findByOrderId(Long id) {
-        Optional<ArrayList<OrderProductEntity>> entity = orderProductRepository.findByOrderId(id);
+    public List<OrderProductDTO> findByOrderId(Long id) {
+        Optional<List<OrderProductEntity>> entity = orderProductRepository.findByOrderId(id);
         if (entity.isPresent()) {
-            return (ArrayList<OrderProductDTO>) entity.stream().map(x -> modelMapper.map(x, OrderProductDTO.class))
+            return entity.get().stream().map(x -> modelMapper.map(x, OrderProductDTO.class))
                     .collect(Collectors.toList());
         } else {
             return null;
