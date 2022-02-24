@@ -7,7 +7,7 @@ import com.example.reto2.Service.Enums.OrderStatus;
 public class OrderDTO {
     private long id;
     private Date creationDate;
-    private String costumerName;
+    private String customerName;
     private OrderStatus status;
 
     public long getId() {
@@ -26,12 +26,12 @@ public class OrderDTO {
         this.creationDate = creationDate;
     }
 
-    public String getCostumerName() {
-        return costumerName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCostumerName(String costumerName) {
-        this.costumerName = costumerName;
+    public void setCustomerName(String costumerName) {
+        this.customerName = costumerName;
     }
 
     public OrderStatus getStatus() {
