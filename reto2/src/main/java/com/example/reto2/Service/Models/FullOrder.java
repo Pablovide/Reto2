@@ -1,13 +1,13 @@
 package com.example.reto2.Service.Models;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FullOrder {
     private OrderDTO order;
-    private ArrayList<ProductDTO> products;
+    private Object[][] products;
     public FullOrder() {
     }
-    public FullOrder(OrderDTO order, ArrayList<ProductDTO> products) {
+    public FullOrder(OrderDTO order, Object[][] products) {
         this.order = order;
         this.products = products;
     }
@@ -17,10 +17,10 @@ public class FullOrder {
     public void setOrder(OrderDTO order) {
         this.order = order;
     }
-    public ArrayList<ProductDTO> getProducts() {
+    public Object[][] getProducts() {
         return products;
     }
-    public void setProducts(ArrayList<ProductDTO> products) {
+    public void setProducts(Object[][] products) {
         this.products = products;
     }
 }

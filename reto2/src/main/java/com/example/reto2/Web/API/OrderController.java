@@ -1,6 +1,7 @@
 package com.example.reto2.Web.API;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.reto2.Service.OrderProductService;
@@ -52,15 +53,18 @@ public class OrderController {
         return fullOrder;
     }
 
-    private ArrayList<ProductDTO> getAllProductsByOrderId(Long id) {
+    private Object[][] getAllProductsByOrderId(Long id) {
         var orderProducts = orderProductService.findByOrderId(id);
-        ArrayList<ProductDTO> products = new ArrayList<ProductDTO>();
+        var iterator = -1;
+        var products = new Object[orderProducts.size()][2];
         for(OrderProductDTO orderProduct : orderProducts){
+            iterator++;
             var product = productService.findById(orderProduct.getProductId());
             if(product == null) {
                 throw new ObjectNotFoundException(orderProduct.getProductId(), "Product");
             }
-            products.add(product);
+            products[iterator][0] = product;
+            products[iterator][1] = orderProduct.getQuantity();
         }
         return products;
     }
