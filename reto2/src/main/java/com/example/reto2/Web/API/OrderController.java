@@ -16,6 +16,7 @@ import com.example.reto2.Service.Models.OrderProductDTO;
 import com.example.reto2.Service.Models.ProductDTO;
 
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,6 +75,15 @@ public class OrderController {
             orderProductService.add(orderProduct);
         }
         return order.getId();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.delete(id);
+        var orderProducts = orderProductService.findByOrderId(id);
+        for (var orderProduct : orderProducts) {
+            orderProductService.delete(orderProduct.getId());
+        }
     }
     
     private Object[][] getAllProductsByOrderId(Long id) {
