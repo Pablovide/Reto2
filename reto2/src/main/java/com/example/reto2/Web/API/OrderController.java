@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,7 +34,8 @@ public class OrderController {
     private final ProductService productService;
     private final OrderProductService orderProductService;
 
-    public OrderController(OrderService orderService, ProductService productService, OrderProductService orderProductService) {
+    public OrderController(OrderService orderService, ProductService productService,
+            OrderProductService orderProductService) {
         this.orderService = orderService;
         this.productService = productService;
         this.orderProductService = orderProductService;
@@ -47,13 +50,13 @@ public class OrderController {
     public FullOrder getFullOrderDataByOrderId(@PathVariable Long id) throws Exception {
         FullOrder fullOrder = new FullOrder();
         var order = orderService.findById(id);
-        if(order == null) {
+        if (order == null) {
             throw new ObjectNotFoundException(id, "Order");
         }
         fullOrder.setOrder(order);
         try {
             fullOrder.setProducts(getAllProductsByOrderId(id));
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new ObjectNotFoundException(id, "Products");
         }
         return fullOrder;
@@ -67,7 +70,7 @@ public class OrderController {
         order.setStatus(OrderStatus.PENDING);
         order = orderService.add(order);
         HashMap<Long, Integer> productHMap = mapProductListToHashMap(makeOrder.getProducts());
-        for(var product : productHMap.entrySet()) {
+        for (var product : productHMap.entrySet()) {
             OrderProductDTO orderProduct = new OrderProductDTO();
             orderProduct.setOrderId(order.getId());
             orderProduct.setProductId(product.getKey());
@@ -75,6 +78,53 @@ public class OrderController {
             orderProductService.add(orderProduct);
         }
         return order.getId();
+    }
+
+    @PutMapping("/add/{id}")
+    public void addProductToOrder(@PathVariable Long id, @RequestParam Long productId, @RequestParam(defaultValue = "1") Integer quantity)
+            throws Exception {
+        var orderProducts = orderProductService.findByOrderId(id);
+        if (orderProducts == null) {
+            throw new ObjectNotFoundException(id, "Order");
+        }
+        if (productService.findById(productId) == null) {
+            throw new ObjectNotFoundException(productId, "Product");
+        }
+        for (var orderProduct : orderProducts) {
+            if (orderProduct.getProductId() == productId) {
+                orderProduct.setQuantity(orderProduct.getQuantity() + quantity);
+                orderProductService.update(orderProduct.getId(), orderProduct);
+                return;
+            }
+        }
+        OrderProductDTO orderProductDTO = new OrderProductDTO();
+        orderProductDTO.setOrderId(id);
+        orderProductDTO.setProductId(productId);
+        orderProductDTO.setQuantity(quantity);
+        orderProductService.add(orderProductDTO);
+    }
+
+    @PutMapping("/remove/{id}")
+    public void removeProductFromOrder(@PathVariable Long id, @RequestParam Long productId, @RequestParam(defaultValue = "1") Integer quantity)
+            throws Exception {
+        var orderProducts = orderProductService.findByOrderId(id);
+        if (orderProducts == null) {
+            throw new ObjectNotFoundException(id, "Order");
+        }
+        if (productService.findById(productId) == null) {
+            throw new ObjectNotFoundException(productId, "Product");
+        }
+        for (var orderProduct : orderProducts) {
+            if (orderProduct.getProductId() == productId) {
+                if (orderProduct.getQuantity() - quantity < 0) {
+                    throw new Exception("Quantity is not valid");
+                }
+                orderProduct.setQuantity(orderProduct.getQuantity() - quantity);
+                orderProductService.update(orderProduct.getId(), orderProduct);
+                return;
+            }
+        }
+        throw new Exception("Product not found");
     }
 
     @DeleteMapping("/{id}")
@@ -85,15 +135,15 @@ public class OrderController {
             orderProductService.delete(orderProduct.getId());
         }
     }
-    
+
     private Object[][] getAllProductsByOrderId(Long id) {
         var orderProducts = orderProductService.findByOrderId(id);
         var iterator = -1;
         var products = new Object[orderProducts.size()][2];
-        for(OrderProductDTO orderProduct : orderProducts){
+        for (OrderProductDTO orderProduct : orderProducts) {
             iterator++;
             var product = productService.findById(orderProduct.getProductId());
-            if(product == null) {
+            if (product == null) {
                 throw new ObjectNotFoundException(orderProduct.getProductId(), "Product");
             }
             products[iterator][0] = product;
@@ -104,8 +154,8 @@ public class OrderController {
 
     private HashMap<Long, Integer> mapProductListToHashMap(ArrayList<ProductDTO> products) {
         HashMap<Long, Integer> productHMap = new HashMap<>();
-        for(ProductDTO product : products) {
-            if(productHMap.containsKey(product.getId())) {
+        for (ProductDTO product : products) {
+            if (productHMap.containsKey(product.getId())) {
                 productHMap.put(product.getId(), productHMap.get(product.getId()) + 1);
             } else {
                 productHMap.put(product.getId(), 1);
