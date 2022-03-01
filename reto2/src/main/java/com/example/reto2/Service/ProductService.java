@@ -71,4 +71,10 @@ public class ProductService {
         }
         return products;
     }
+
+    public ProductDTO createProduct(ProductDTO product) {
+        ProductEntity entityToInsert = modelMapper.map(product, ProductEntity.class);
+        ProductEntity result = productRepository.save(entityToInsert);
+        return modelMapper.map(result, ProductDTO.class);
+    }
 }

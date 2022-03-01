@@ -1,0 +1,13 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div style="display: flex; flex-wrap: wrap;">
+        <div  th:each="order : ${orders}" style="width:25%;">
+            <h3 th:text="${order.customerName}"></h3>
+            <p th:text="${order.creationDate}"></p>
+            <p th:text="${order.status}"></p>
+            <a th:href="@{'/admin/order/' + ${order.id}}">View</a>
+        </div>
+    </div>
+  </body>
+  <script></script>
+</html>
