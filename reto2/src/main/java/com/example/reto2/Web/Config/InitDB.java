@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class InitDB {
+    
     @Bean
     CommandLineRunner initDatabase(OrderRepository orderRepos, ProductRepository productRepos, OrderProductRepository orderProductRepos){
         return args -> {
@@ -24,7 +25,7 @@ public class InitDB {
             orderRepos.save(new OrderEntity(Calendar.getInstance().getTime(),"Marthe Jerson", OrderStatus.CANCELLED.toString()));
             orderRepos.save(new OrderEntity(Calendar.getInstance().getTime(),"Xerxes Lapham", OrderStatus.SHIPPED.toString()));
             orderRepos.save(new OrderEntity(Calendar.getInstance().getTime(),"Brandice Loughhead", OrderStatus.ACCEPTED.toString()));
-            productRepos.save(new ProductEntity("TV Set", 300, "https://www.amazon.es/Hisense-UHD-2020-43AE7000F-Resoluci%C3%B3n/dp/B08553S69P/ref=sr_1_7?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=televisor&qid=1639057872&sr=8-7&th=1"));
+            productRepos.save(new ProductEntity("TV", 300, "https://www.amazon.es/Hisense-UHD-2020-43AE7000F-Resoluci%C3%B3n/dp/B08553S69P/ref=sr_1_7?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=televisor&qid=1639057872&sr=8-7&th=1"));
             productRepos.save(new ProductEntity("Game Console", 200, "https://www.amazon.es/Nintendo-Switch-Lite-Consola-Estandar/dp/B07V5JJHK4/ref=sr_1_9?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=379R66AG2DEWV&keywords=nintendo+switch&qid=1639057941&sprefix=nintendo+swi%2Caps%2C180&sr=8-9"));
             productRepos.save(new ProductEntity("Sofa", 100, "https://www.amazon.es/Miriam-Sof%C3%A1-Esquina-Color-Burdeos/dp/B08H99PYKT/ref=sr_1_12?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=sofa&qid=1639057890&sr=8-12&th=1"));
             productRepos.save(new ProductEntity("Icecream", 5, "https://www.amazon.es/Ben-Jerrys-Cookie-Dough-Helado/dp/B002VLAS6M/ref=sr_1_8_0o_DIA?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=helado&qid=1639057963&sr=8-8"));
@@ -36,5 +37,7 @@ public class InitDB {
             orderProductRepos.save(new OrderProductEntity(4L, 11L, 3));
             orderProductRepos.save(new OrderProductEntity(5L, 10L, 20));
         };
+      
     }
+      
 }
