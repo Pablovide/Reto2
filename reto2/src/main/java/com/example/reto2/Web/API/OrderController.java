@@ -79,4 +79,9 @@ public class OrderController {
     public void deleteOrder(@PathVariable Long id) {
         orderService.deleteFullOrder(id);
     }
+
+    @PutMapping("/accept/{id}")
+    public void acceptOrder(@PathVariable Long id) {
+        orderService.acceptOrder(id);
+    }
 }

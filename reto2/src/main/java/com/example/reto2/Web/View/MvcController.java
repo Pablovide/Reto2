@@ -34,4 +34,10 @@ public class MvcController {
         }
         return mv;
     }
+
+    @GetMapping("/newOrder")
+    public ModelAndView newOrder() {
+        ModelAndView mv = new ModelAndView("newOrder");
+        return mv;
+    }
 }

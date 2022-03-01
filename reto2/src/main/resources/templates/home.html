@@ -5,7 +5,7 @@
       th:text="${fullCurrentOrder.order.id}"
       id="currentOrder"
     ></p>
-    <h1>Página principal</h1>
+    <h1>Home</h1>
     <div style="display: flex">
       <div
         style="
@@ -46,6 +46,7 @@
             <p th:text="${product[0].name}"></p>
             <p th:text="'x' + ${product[1]}"></p>
             <p th:text="'$' + ${product[0].price} * ${product[1]}"></p>
+            <button onclick="removeFromCart(this)" th:value="${product[0].id}">Remove</button>
           </div>
           <button
             style="
@@ -53,7 +54,7 @@
               width: 50%;
               height: 50px;
               background-color: lightblue;
-            "
+            " onclick="checkout()"
           >
             Checkout
           </button>
@@ -67,6 +68,34 @@
       var currentOrder = document.getElementById("currentOrder").innerHTML;
       var result = fetch(
         "http://localhost:8080/api/v1/orders/add/" + currentOrder +"?productId="+ value,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      window.location.reload();
+    }
+    function removeFromCart(element) {
+        var value = element.value;
+        var currentOrder = document.getElementById("currentOrder").innerHTML;
+        var result = fetch(
+          "http://localhost:8080/api/v1/orders/remove/" + currentOrder +"?productId="+ value,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        window.location.reload();
+    }
+
+    function checkout() {
+      var currentOrder = document.getElementById("currentOrder").innerHTML;
+      var result = fetch(
+        "http://localhost:8080/api/v1/orders/accept/" + currentOrder,
         {
           method: "PUT",
           headers: {

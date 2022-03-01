@@ -24,7 +24,7 @@ public class InitDB {
             // orderRepos.save(new OrderEntity(Calendar.getInstance().getTime(),"Marthe Jerson", OrderStatus.CANCELLED.toString()));
             // orderRepos.save(new OrderEntity(Calendar.getInstance().getTime(),"Xerxes Lapham", OrderStatus.SHIPPED.toString()));
             // orderRepos.save(new OrderEntity(Calendar.getInstance().getTime(),"Brandice Loughhead", OrderStatus.ACCEPTED.toString()));
-            orderRepos.save(new OrderEntity(Calendar.getInstance().getTime(),"Brandice Loughhead", OrderStatus.PENDING.toString()));
+            //orderRepos.save(new OrderEntity(Calendar.getInstance().getTime(),"Brandice Loughhead", OrderStatus.PENDING.toString()));
             productRepos.save(new ProductEntity("TV Set", 300, "https://cdn.pixabay.com/photo/2014/04/03/10/32/tv-310801_960_720.png"));
             productRepos.save(new ProductEntity("Game Console", 200, "https://cdn.pixabay.com/photo/2020/05/15/08/28/switch-5172817_960_720.png"));
             productRepos.save(new ProductEntity("Sofa", 100, "https://cdn.pixabay.com/photo/2013/07/12/13/58/settee-147701_960_720.png"));

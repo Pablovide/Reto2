@@ -152,6 +152,9 @@ public class OrderService {
                 }
                 orderProduct.setQuantity(orderProduct.getQuantity() - quantity);
                 orderProductService.update(orderProduct.getId(), orderProduct);
+                if(orderProduct.getQuantity() == 0) {
+                    orderProductService.delete(orderProduct.getId());
+                }
                 return;
             }
         }
@@ -163,6 +166,14 @@ public class OrderService {
         var orderProducts = orderProductService.findByOrderId(id);
         for (var orderProduct : orderProducts) {
             orderProductService.delete(orderProduct.getId());
+        }
+    }
+
+    public void acceptOrder(Long id) {
+        var order = orderRepository.findById(id);
+        if (order.isPresent()) {
+            order.get().setStatus(OrderStatus.ACCEPTED.toString());
+            orderRepository.save(order.get());
         }
     }
 }
