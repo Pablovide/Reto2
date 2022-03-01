@@ -1,5 +1,6 @@
 package com.example.reto2.Web.Config;
 
+import com.example.reto2.Service.OrderProductService;
 import com.example.reto2.Service.OrderService;
 import com.example.reto2.Service.ProductService;
 
@@ -19,6 +20,11 @@ public class DI {
         return new OrderService();
     }
     
+    @Bean
+    OrderProductService createOrderProductService(){
+        return new OrderProductService();
+    }
+
     @Bean
     ModelMapper createModelMapper(){
         return new ModelMapper();

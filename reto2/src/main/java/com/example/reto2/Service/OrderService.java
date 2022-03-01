@@ -43,12 +43,12 @@ public class OrderService {
         }
     }
 
-    public Optional<OrderDTO> findById(Long id){
+    public OrderDTO findById(Long id){
         Optional<OrderEntity> entity = orderRepository.findById(id);
         if(entity.isPresent()){
-            return Optional.of(modelMapper.map(entity.get(), OrderDTO.class));
+            return modelMapper.map(entity.get(), OrderDTO.class);
         }else{
-            return Optional.empty();
+            return null;
         }
     }
 }
