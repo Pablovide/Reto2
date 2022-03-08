@@ -68,7 +68,7 @@ public class OrderService {
     public OrderDTO getCurrentOrder() {
         var orders = orderRepository.findAll();
         for (OrderEntity order : orders) {
-            if (order.getStatus() == OrderStatus.PENDING.toString()) {
+            if (order.getStatus().equals(OrderStatus.PENDING.toString())) {
                 return modelMapper.map(order, OrderDTO.class);
             }
         }
