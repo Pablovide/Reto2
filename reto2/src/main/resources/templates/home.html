@@ -5,6 +5,10 @@
       th:text="${fullCurrentOrder.order.id}"
       id="currentOrder"
     ></p>
+    <a style="display: none" th:href="@{~/api/v1/orders/add/}" id="addPath"></a>
+    <a style="display: none" th:href="@{~/api/v1/orders/remove/}" id="removePath"></a>
+    <a style="display: none" th:href="@{~/api/v1/orders/accept/}" id="checkoutPath"></a>
+    <a style="display: none" th:href="@{~/thankyou}" id="thankyou"></a>
     <h1>Home</h1>
     <div style="display: flex">
       <div
@@ -64,10 +68,11 @@
   </body>
   <script>
     function addToCart(element) {
+      var path = document.getElementById("addPath").href;
       var value = element.value;
       var currentOrder = document.getElementById("currentOrder").innerHTML;
       var result = fetch(
-        "http://localhost:8080/api/v1/orders/add/" + currentOrder +"?productId="+ value,
+        `${path}${currentOrder}?productId=${value}`,
         {
           method: "PUT",
           headers: {
@@ -78,10 +83,11 @@
       window.location.reload();
     }
     function removeFromCart(element) {
+        var path = document.getElementById("removePath").href;
         var value = element.value;
         var currentOrder = document.getElementById("currentOrder").innerHTML;
         var result = fetch(
-          "http://localhost:8080/api/v1/orders/remove/" + currentOrder +"?productId="+ value,
+          `${path}${currentOrder}?productId=${value}`,
           {
             method: "PUT",
             headers: {
@@ -93,9 +99,11 @@
     }
 
     function checkout() {
+      var thankYouPath = document.getElementById("thankyou").href;
+      var path = document.getElementById("checkoutPath").href;
       var currentOrder = document.getElementById("currentOrder").innerHTML;
       var result = fetch(
-        "http://localhost:8080/api/v1/orders/accept/" + currentOrder,
+        `${path}${currentOrder}`,
         {
           method: "PUT",
           headers: {
@@ -103,7 +111,7 @@
           },
         }
       );
-      window.location.reload();
+      window.location = ``;
     }
   </script>
 </html>

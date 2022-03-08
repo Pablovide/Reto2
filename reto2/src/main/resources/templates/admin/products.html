@@ -1,5 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+    <a th:href="@{~/api/v1/products}" id="addPath" style="display: none;"></a>
+    <a th:href="@{~/admin/products}" id="path" style="display: none;"></a>
     <div style="display: flex; flex-wrap: wrap;">
         <div th:each="product : ${products}" style="width: 25%;">
             <h1 th:text="'ID:'+ ${product.id} + ' ' + ${product.name}"></h1>
@@ -11,11 +13,13 @@
         <input type="text" id="name" placeholder="name">
         <input type="text" id="image" placeholder="image">
         <input type="text" id="price" placeholder="price">
-        <input type="submit" onclick="addProduct()">Add product</button>
+        <input type="submit" onclick="addProduct()" value="Add product">
     </form>
 </body>
 <script>
     function addProduct() {
+        var apipath = document.getElementById("addPath").href;
+        var path = document.getElementById("path").href;
         var name = document.getElementById("name").value;
         var image = document.getElementById("image").value;
         var price = document.getElementById("price").value;
@@ -25,7 +29,7 @@
             imageUrl: image,
             price: price
         };
-        fetch("http://localhost:8080/api/v1/products", {
+        fetch(`${apipath}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -39,7 +43,7 @@
             })
             .then(function (data) {
                 console.log(data);
-                window.location.href = "http://localhost:8080/admin/products";
+                window.location.href = `${path}`;
             });
     }
 </script>
