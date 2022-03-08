@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class InitDB {
+    
     @Bean
     CommandLineRunner initDatabase(OrderRepository orderRepos, ProductRepository productRepos, OrderProductRepository orderProductRepos){
         return args -> {
@@ -37,5 +38,7 @@ public class InitDB {
             // orderProductRepos.save(new OrderProductEntity(4L, 11L, 3));
             // orderProductRepos.save(new OrderProductEntity(5L, 10L, 20));
         };
+      
     }
+      
 }
