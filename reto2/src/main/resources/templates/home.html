@@ -1,0 +1,117 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <p
+      style="display: none"
+      th:text="${fullCurrentOrder.order.id}"
+      id="currentOrder"
+    ></p>
+    <a style="display: none" th:href="@{~/api/v1/orders/add/}" id="addPath"></a>
+    <a style="display: none" th:href="@{~/api/v1/orders/remove/}" id="removePath"></a>
+    <a style="display: none" th:href="@{~/api/v1/orders/accept/}" id="checkoutPath"></a>
+    <a style="display: none" th:href="@{~/thankyou}" id="thankyou"></a>
+    <h1>Home</h1>
+    <div style="display: flex">
+      <div
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2rem;
+          align-items: center;
+          width: 75%;
+        "
+      >
+        <article th:each="product : ${products}">
+          <img
+            th:src="${product.imageUrl}"
+            alt=""
+            style="max-width: 10rem; height: 100px"
+          />
+          <h2 th:text="${product.name}"></h2>
+          <p th:text="'$' + ${product.price}"></p>
+          <button
+            onclick="addToCart(this)"
+            type="submit"
+            style="background-color: greenyellow"
+            th:value="${product.id}"
+          >
+            Add to cart
+          </button>
+        </article>
+      </div>
+      <div style="width: 25%; height: auto">
+        <article
+          style="border: 1px solid black; display: flex; flex-direction: column"
+        >
+          <h3 style="align-self: center">Shopping cart</h3>
+          <div
+            th:each="product : ${fullCurrentOrder.products}"
+            style="display: flex; justify-content: space-around"
+          >
+            <p th:text="${product[0].name}"></p>
+            <p th:text="'x' + ${product[1]}"></p>
+            <p th:text="'$' + ${product[0].price} * ${product[1]}"></p>
+            <button onclick="removeFromCart(this)" th:value="${product[0].id}">Remove</button>
+          </div>
+          <button
+            style="
+              align-self: center;
+              width: 50%;
+              height: 50px;
+              background-color: lightblue;
+            " onclick="checkout()"
+          >
+            Checkout
+          </button>
+        </article>
+      </div>
+    </div>
+  </body>
+  <script>
+    function addToCart(element) {
+      var path = document.getElementById("addPath").href;
+      var value = element.value;
+      var currentOrder = document.getElementById("currentOrder").innerHTML;
+      var result = fetch(
+        `${path}${currentOrder}?productId=${value}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      window.location.reload();
+    }
+    function removeFromCart(element) {
+        var path = document.getElementById("removePath").href;
+        var value = element.value;
+        var currentOrder = document.getElementById("currentOrder").innerHTML;
+        var result = fetch(
+          `${path}${currentOrder}?productId=${value}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        window.location.reload();
+    }
+
+    function checkout() {
+      var thankYouPath = document.getElementById("thankyou").href;
+      var path = document.getElementById("checkoutPath").href;
+      var currentOrder = document.getElementById("currentOrder").innerHTML;
+      var result = fetch(
+        `${path}${currentOrder}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      window.location = ``;
+    }
+  </script>
+</html>

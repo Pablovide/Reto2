@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<a th:href="@{~/}" style="display: none;" id="path"></a>  
+<h1>New order</h1>
+
+  <form onsubmit="createOrder()">
+    <input id="customerName" type="text" placeholder="Enter your name" />
+    <input type="submit" value="Create order" />
+  </form>
+  <script>
+    function createOrder() {
+      var path = document.getElementById("path").href;
+      var name = document.getElementById("customerName").value;
+      var data = {
+        customerName: name,
+        products: [],
+      };
+      fetch(`${path}/api/v1/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          data
+        )
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+          window.location.href = `${path}`;
+        });
+    }
+  </script>
+</html>
