@@ -16,6 +16,7 @@ import com.example.reto2.Service.Models.OrderProductDTO;
 import com.example.reto2.Service.Models.ProductDTO;
 
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,46 +43,79 @@ public class OrderController {
     }
 
     @GetMapping("")
-    public List<OrderDTO> getOrders() {
-        return orderService.getAll();
+    public ResponseEntity<List<OrderDTO>> getOrders() {
+        try {
+            var result = orderService.getAll();
+            return ResponseEntity.ok(result);
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/full/{id}")
-    public FullOrder getFullOrderDataByOrderId(@PathVariable Long id) throws Exception {
+    public ResponseEntity<FullOrder> getFullOrderDataByOrderId(@PathVariable Long id) throws Exception {
         try {
-            return orderService.getFullOrderByOrderId(id);
+            var result = orderService.getFullOrderByOrderId(id);
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
-            throw new ObjectNotFoundException(id, "Order");
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @PostMapping("")
-    public OrderDTO createOrder(@RequestBody MakeOrder makeOrder) {
-        return orderService.createOrder(makeOrder);
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody MakeOrder makeOrder) {
+        try {
+            var result = orderService.createOrder(makeOrder);
+            return ResponseEntity.ok(result);
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/add/{id}")
-    public void addProductToOrder(@PathVariable Long id, @RequestParam Long productId,
+    public ResponseEntity addProductToOrder(@PathVariable Long id, @RequestParam Long productId,
             @RequestParam(defaultValue = "1") Integer quantity)
             throws Exception {
-        orderService.addProductToOrder(id, productId, quantity);
+                try {
+                    orderService.addProductToOrder(id, productId, quantity);
+                    return ResponseEntity.ok().build();
+                } catch (Exception e) {
+                    return ResponseEntity.badRequest().build();
+                }
+        
 
     }
 
     @PutMapping("/remove/{id}")
-    public void removeProductFromOrder(@PathVariable Long id, @RequestParam Long productId,
+    public ResponseEntity removeProductFromOrder(@PathVariable Long id, @RequestParam Long productId,
             @RequestParam(defaultValue = "1") Integer quantity)
             throws Exception {
-        orderService.removeProductFromOrder(id, productId, quantity);
+                try {
+                    orderService.removeProductFromOrder(id, productId, quantity);
+                    return ResponseEntity.ok().build();
+                } catch (Exception e) {
+                    return ResponseEntity.badRequest().build();
+                }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Long id) {
-        orderService.deleteFullOrder(id);
+    public ResponseEntity deleteOrder(@PathVariable Long id) {
+        try {
+            orderService.deleteFullOrder(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PutMapping("/accept/{id}")
-    public void acceptOrder(@PathVariable Long id) {
-        orderService.acceptOrder(id);
+    public ResponseEntity acceptOrder(@PathVariable Long id) {
+        try {
+            orderService.acceptOrder(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
