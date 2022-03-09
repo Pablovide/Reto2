@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<a th:href="@{/api/v1/orders}" style="display: none;" id="path"></a>  
+<a th:href="@{~/}" style="display: none;" id="path"></a>  
 <h1>New order</h1>
 
   <form onsubmit="createOrder()">
@@ -14,7 +14,7 @@
         customerName: name,
         products: [],
       };
-      fetch(`${path}`, {
+      fetch(`${path}/api/v1/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@
         })
         .then(function (data) {
           console.log(data);
-          window.location.href = "http://localhost:8080";
+          window.location.href = `${path}`;
         });
     }
   </script>
