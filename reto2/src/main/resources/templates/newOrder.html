@@ -1,5 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
-  <h1>New order</h1>
+<a th:href="@{/api/v1/orders}" style="display: none;" id="path"></a>  
+<h1>New order</h1>
 
   <form onsubmit="createOrder()">
     <input id="customerName" type="text" placeholder="Enter your name" />
@@ -7,12 +8,13 @@
   </form>
   <script>
     function createOrder() {
+      var path = document.getElementById("path").href;
       var name = document.getElementById("customerName").value;
       var data = {
         customerName: name,
         products: [],
       };
-      fetch("http://localhost:8080/api/v1/orders", {
+      fetch(`${path}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
