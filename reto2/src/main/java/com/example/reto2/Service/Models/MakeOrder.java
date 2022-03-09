@@ -1,7 +1,6 @@
 package com.example.reto2.Service.Models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MakeOrder {
     private String customerName;

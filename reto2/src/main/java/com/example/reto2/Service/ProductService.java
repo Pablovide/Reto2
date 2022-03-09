@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 import com.example.reto2.Repositories.Entities.ProductEntity;
 import com.example.reto2.Repositories.Interfaces.ProductRepository;
+import com.example.reto2.Service.Models.OrderProductDTO;
 import com.example.reto2.Service.Models.ProductDTO;
 
+import org.hibernate.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +18,8 @@ public class ProductService {
     private ProductRepository productRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private OrderProductService orderProductService;
 
     public List<ProductDTO> getAll(){
         return productRepository.findAll().stream()
@@ -50,5 +54,27 @@ public class ProductService {
         }else{
             return null;
         }
+    }
+
+    public Object[][] getAllProductsByOrderId(Long id) {
+        var orderProducts = orderProductService.findByOrderId(id);
+        var iterator = -1;
+        var products = new Object[orderProducts.size()][2];
+        for (OrderProductDTO orderProduct : orderProducts) {
+            iterator++;
+            var product = findById(orderProduct.getProductId());
+            if (product == null) {
+                throw new ObjectNotFoundException(orderProduct.getProductId(), "Product");
+            }
+            products[iterator][0] = product;
+            products[iterator][1] = orderProduct.getQuantity();
+        }
+        return products;
+    }
+
+    public ProductDTO createProduct(ProductDTO product) {
+        ProductEntity entityToInsert = modelMapper.map(product, ProductEntity.class);
+        ProductEntity result = productRepository.save(entityToInsert);
+        return modelMapper.map(result, ProductDTO.class);
     }
 }

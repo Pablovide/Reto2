@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+      <h1 th:text="${fullOrder.order.customerName}"></h1>
+        <div style="display: flex; flex-wrap: wrap;">
+            <div th:each="product : ${fullOrder.products}" style="width: 25%;">
+                <h1 th:text="'ID:'+ ${product[0].id} + ' ' + ${product[0].name}"></h1>
+                <img th:src="${product[0].imageUrl}" alt="" style="width: 10rem;">
+                <p th:text=" 'x' + ${product[1]}"></p>
+                <p th:text="'$' + ${product[0].price * product[1]}"></p>
+            </div>
+  </body>
+  <script>
+  </script>
+</html>
